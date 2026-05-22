@@ -7,6 +7,9 @@ from lib.space import Space
 from datetime import date
 
 
+"""
+Testing that we are shown a single space with a booking form
+"""
 def test_get_single_space(db_connection, web_client):
     db_connection.seed("seeds/database_connection_test.sql")
     response = web_client.get('/spaces/1')
@@ -16,74 +19,80 @@ def test_get_single_space(db_connection, web_client):
 
 
 def test_get_index(page: Page):
-
     page.goto("http://127.0.0.1:5001/")
-
     h1 = page.locator("h1")
-    expect(h1).to_have_text("Welcome to MakersBnB!")
+    expect(h1).to_have_text("Find Beautiful Spaces To Stay")
 
 
 def test_get_spaces(db_connection, web_client):
     db_connection.seed("seeds/database_connection_test.sql")
+    with web_client.session_transaction() as sess:
+        sess['user_email'] = 'test@test.com'
     response = web_client.get('/spaces/new')
     assert response.status_code == 200
     assert b'<form' in response.data
 
 
+"""
+Testing that list my space button creates a new space
+"""
 def test_post_spaces_creates_new_space(db_connection, web_client):
     db_connection.seed("seeds/database_connection_test.sql")
+    with web_client.session_transaction() as sess:
+        sess['user_email'] = 'test@test.com'
     response = web_client.post('/spaces', data={'space_name': 'Cozy Cottage', 'space_location': 'Cornwall', 'space_description': 'A lovely cottage by the sea', 'price_per_night': 150, 'available_from': '2026-06-01', 'available_to': '2026-08-31'})
     assert response.status_code == 302
-
     repository = SpaceRepository(db_connection)
     spaces = repository.all()
     assert len(spaces) == 2
 
 
+"""
+Testing that a list of spaces shows in spaces route
+"""
 def test_get_spaces_shows_all_spaces(db_connection, web_client):
     db_connection.seed("seeds/database_connection_test.sql")
     response = web_client.get('/spaces')
     assert response.status_code == 200
-    
     assert b'Test Space' in response.data
 
+
+"""
+Testing that we are shown bookings made and received at /requests
+"""
 def test_get_request_shows_booking_made_and_received(db_connection, web_client):
     db_connection.seed("seeds/database_connection_test.sql")
     response = web_client.get('/requests')
     assert response.status_code == 200
-    
 
 
+"""
+Testing that we we can get signup form at /signup
+"""
 def test_get_signup_form_returns_200():
     client = app.test_client()
-    response = client.get("/users/new")
-
+    response = client.get("/signup")
     assert response.status_code == 200
 
 
+"""
+Testing that new users are added to the database
+"""
 def test_create_user_inserts_into_database():
     from lib.database_connection import DatabaseConnection
-
     connection = DatabaseConnection(test_mode=True)
     connection.connect()
-
     connection.execute("TRUNCATE TABLE users CASCADE;")
-
     client = app.test_client()
-
     response = client.post("/users", data={
         "email": "test@test.com",
         "password": "hashed_password"
     })
-
     assert response.status_code == 302
     assert response.headers["Location"] == "/spaces"
-
     result = connection.execute(
         "SELECT email, password_hash FROM users WHERE email = %s",
         ["test@test.com"]
     )[0]
-
     assert result["email"] == "test@test.com"
     assert result["password_hash"] == "hashed_password"
-
