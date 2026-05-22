@@ -1,0 +1,63 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>List a Space</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<nav>
+  <div class="container nav-inner">
+    <div class="logo">MakersBnB</div>
+
+    <div class="nav-links">
+      <a href="/">Home</a>
+      <a href="/spaces">Spaces</a>
+      <a href="/spaces/new">List Space</a>
+      <a href="/requests">Bookings</a>
+
+      {% if session.get('user_email') %}
+        <form method="POST" action="/logout" style="display:inline;">
+          <button type="submit" class="btn">Logout</button>
+        </form>
+      {% else %}
+        <a href="/login">Login</a>
+        <a href="/signup">Sign Up</a>
+      {% endif %}
+    </div>
+  </div>
+</nav>
+
+<div class="auth-wrapper">
+  <div class="auth-card">
+    <h1 style="margin-bottom:30px;">List Your Space</h1>
+
+    <form method="POST" action="/spaces">
+
+      <label>Space Name</label>
+      <input type="text" name="space_name" placeholder="Modern Loft" required>
+
+      <label>Location</label>
+      <input type="text" name="space_location" placeholder="Shoreditch, London" required>
+
+      <label>Description</label>
+      <textarea name="space_description" placeholder="Describe your beautiful space"></textarea>
+
+      <label>Price Per Night</label>
+      <input type="number" name="price_per_night" placeholder="120">
+
+       <label>Available From (DD/MM/YYYY):</label>
+      <input type="date" name="available_from" placeholder="Add starting date here">
+
+      <label>Available To (DD/MM/YYYY):</label>
+      <input type="date" name="available_to" placeholder="Add ending date here">
+      
+      <input type="submit" value="Create Listing">
+
+    </form>
+  </div>
+</div>
+
+</body>
+</html>

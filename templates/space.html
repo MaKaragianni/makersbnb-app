@@ -1,0 +1,127 @@
+<!-- <!DOCTYPE html>
+<html>
+    <head>
+    <title>{{ space.space_name }}</title>
+    </head>
+
+    <body>
+    <h1>{{ space.space_name }}</h1>
+    <h3>{{ space.space_description }}</h3>
+
+    <div class = "space-details">
+        <ul>
+            {{ space.space_location }}<br>
+            £{{ space.price_per_night }} per night<br>
+            Available from {{ space.available_from }} to {{ space.available_to }}
+        </ul>
+    </div> 
+
+    <form method="POST" action="/requests"></form>
+    <p>Pick a night</p>
+    <input type="date" name="date" min="{{ space.available_from }}" max="{{ space.available_to }}">
+
+
+    <a href="/requests"><button>Request to Book</button></a>
+    </body>
+</html> -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ space.space_name }}</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<nav>
+  <div class="container nav-inner">
+    <div class="logo">MakersBnB</div>
+
+    <div class="nav-links">
+      <a href="/">Home</a>
+      <a href="/spaces">Spaces</a>
+      <a href="/spaces/new">List Space</a>
+      <a href="/requests">Bookings</a>
+
+      {% if session.get('user_email') %}
+        <form method="POST" action="/logout" style="display:inline;">
+          <button type="submit" class="btn">Logout</button>
+        </form>
+      {% else %}
+        <a href="/login">Login</a>
+        <a href="/signup">Sign Up</a>
+      {% endif %}
+    </div>
+  </div>
+</nav>
+
+<div class="container page-spacing">
+
+  <div class="space-card" style="max-width: 900px; margin:auto;">
+
+    <img
+      src="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?q=80&w=1200&auto=format&fit=crop"
+      alt="Space image"
+    >
+
+    <div class="space-card-content">
+
+      <h1 style="margin-bottom:20px;">{{ space.space_name }}</h1>
+
+      <p class="space-location">
+        {{ space.space_location }}
+      </p>
+
+      <p class="space-description">
+        {{ space.space_description }}
+      </p>
+
+      <p class="space-description">
+        <strong>£{{ space.price_per_night }}</strong> per night
+      </p>
+
+      <p class="space-description">
+        Available from {{ space.available_from }} to {{ space.available_to }}
+      </p>
+
+      <hr style="margin:30px 0; border-color:rgba(255,255,255,0.08);">
+
+      <h2 style="margin-bottom:20px;">Request Booking</h2>
+
+      <form method="POST" action="/requests">
+
+        <input type="hidden" name="space_id" value="{{ space.id }}">
+
+        <label>From Date</label>
+        <input
+          type="date"
+          name="booking_start"
+          min="{{ space.available_from }}"
+          max="{{ space.available_to }}"
+          required
+        >
+
+        <label>To Date</label>
+        <input
+          type="date"
+          name="booking_end"
+          min="{{ space.available_from }}"
+          max="{{ space.available_to }}"
+          required
+        >
+
+        <input type="submit" value="Request To Book">
+
+      </form>
+
+    </div>
+  </div>
+
+<form method="POST" action="/logout" style="margin-top:40px;">
+  <input type="submit" value="Log Out">
+</form>
+
+</div>
+
+</body>
+</html>

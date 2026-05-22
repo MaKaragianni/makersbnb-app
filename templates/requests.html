@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Requests</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<nav>
+  <div class="container nav-inner">
+    <div class="logo">MakersBnB</div>
+
+    <div class="nav-links">
+      <a href="/">Home</a>
+      <a href="/spaces">Spaces</a>
+      <a href="/spaces/new">List Space</a>
+      <a href="/requests">Bookings</a>
+
+      {% if session.get('user_email') %}
+        <form method="POST" action="/logout" style="display:inline;">
+          <button type="submit" class="btn">Logout</button>
+        </form>
+      {% else %}
+        <a href="/login">Login</a>
+        <a href="/signup">Sign Up</a>
+      {% endif %}
+    </div>
+  </div>
+</nav>
+
+<h1 style="margin-top: 40px;">Requests I've made</h1>
+
+<div class="spaces-container">
+
+  {% for booking in booking_made %}
+
+  <div class="space-card">
+    <div class="space-card-content">
+
+      <h3>{{ booking.space_name }}</h3>
+
+      <p class="space-description">
+        Requested by: {{ booking.user_email }}
+      </p>
+
+      <p class="space-description">
+        {{ booking.booking_start }} → {{ booking.booking_end }}
+      </p>
+
+      <p class="space-description">
+        Status: {{ booking.booking_status }}
+      </p>
+
+    </div>
+  </div>
+
+  {% endfor %}
+
+</div>
+
+
+<h1>Requests I've received</h1>
+
+<div class="spaces-container">
+
+  {% for booking in booking_received %}
+
+  <div class="space-card">
+    <div class="space-card-content">
+
+      <h3>{{ booking.space_name }}</h3>
+
+      <p class="space-description">
+        Requested by: {{ booking.user_email }}
+      </p>
+
+      <p class="space-description">
+        {{ booking.booking_start }} → {{ booking.booking_end }}
+      </p>
+
+      <p class="space-description">
+        Status: {{ booking.booking_status }}
+      </p>
+
+      {% if booking.booking_status == 'Pending' %}
+
+      <div style="display:flex; gap:12px; margin-top:20px;">
+
+        <form method="POST" action="/requests/{{ booking.id }}/approve">
+          <button type="submit">Approve</button>
+        </form>
+
+        <form method="POST" action="/requests/{{ booking.id }}/deny">
+          <button type="submit">Deny</button>
+        </form>
+
+      </div>
+
+      {% endif %}
+
+    </div>
+  </div>
+
+  {% endfor %}
+
+</div>
+
+</body>
+</html>

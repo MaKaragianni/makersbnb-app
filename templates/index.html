@@ -1,0 +1,41 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>MakersBnB</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<nav>
+  <div class="container nav-inner">
+    <div class="logo">MakersBnB</div>
+
+    <div class="nav-links">
+      <a href="/">Home</a>
+      <a href="/spaces">Spaces</a>
+      <a href="/spaces/new">List Space</a>
+      <a href="/requests">Bookings</a>
+
+      {% if session.get('user_email') %}
+        <form method="POST" action="/logout" style="display:inline;">
+          <button type="submit" class="btn">Logout</button>
+        </form>
+      {% else %}
+        <a href="/login">Login</a>
+        <a href="/signup">Sign Up</a>
+      {% endif %}
+    </div>
+  </div>
+</nav>
+
+<section class="hero">
+  <div>
+    <h1>Find Beautiful Spaces To Stay</h1>
+    <p>Luxury-inspired stays, creative spaces and boutique travel experiences.</p>
+    <a href="/spaces"><button class="btn">Browse Spaces</button></a>
+  </div>
+</section>
+
+</body>
+</html>

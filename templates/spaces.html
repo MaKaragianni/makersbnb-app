@@ -1,0 +1,75 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Browse Spaces</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<nav>
+  <div class="container nav-inner">
+    <div class="logo">MakersBnB</div>
+
+    <div class="nav-links">
+      <a href="/">Home</a>
+      <a href="/spaces">Spaces</a>
+      <a href="/spaces/new">List Space</a>
+      <a href="/requests">Bookings</a>
+
+      {% if session.get('user_email') %}
+        <form method="POST" action="/logout" style="display:inline;">
+          <button type="submit" class="btn">Logout</button>
+        </form>
+      {% else %}
+        <a href="/login">Login</a>
+        <a href="/signup">Sign Up</a>
+      {% endif %}
+    </div>
+  </div>
+</nav>
+
+
+<div class="container page-spacing">
+
+<h1 class="section-title">Browse Available Spaces</h1>
+
+<div style="text-align:center; margin-top:30px;">
+  <a href="/spaces/new"><button class="btn">List a Space</button></a>
+</div>
+
+<div class="spaces-container">
+{% for space in spaces %}
+  <div class="space-card">
+    <img src="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?q=80&w=1200&auto=format&fit=crop" alt="Space image">
+
+    <div class="space-card-content">
+      <h3>{{ space.space_name }}</h3>
+
+      <p class="space-location">{{ space.space_location }}</p>
+
+      <p class="space-description">
+        {{ space.space_description }}
+      </p>
+
+      <p class="space-description">
+        £{{ space.price_per_night }} per night
+      </p>
+
+      <p class="space-description">
+        Available from {{ space.available_from }} to {{ space.available_to }}
+      </p>
+
+      <div class="space-footer">
+        <a href="/spaces/{{ space.id }}">
+          <button>View Space</button>
+        </a>
+      </div>
+    </div>
+  </div>
+{% endfor %}
+</div>
+
+</div>
+</body>
+</html>
