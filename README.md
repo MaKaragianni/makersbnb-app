@@ -1,33 +1,26 @@
 # MakersBnB 
 
-## Project Description
+A Flask + PostgreSQL accommodation booking platform.
 
-**MakersBnB** is a full-stack web application designed to simplify the process of listing, discovering, and booking unique accommodations. Inspired by the core functionalities of Airbnb, the platform acts as a centralised marketplace that connects property owners with guests. 
+## Features
 
-Built with a focus on seamless user experience and secure data handling, MakersBnB handles the entire lifecycle of a property rental, from user authentication and dynamic space creation to availability management and booking requests.
-
-### Key Features
-
-*   **User Authentication & Security:** Secure sign-up and log-in portals ensuring user data privacy. Users must be authenticated to list or book spaces.
-*   **Dynamic Space Listings:** Users can effortlessly list their own properties with details such as name, descriptions, price per night, and available dates.
-*   **Interactive Marketplace:** An intuitive dashboard where users can browse all available spaces posted by the community.
-*   **Streamlined Booking System:** Guests can select a space, choose their desired dates, and instantly submit a booking request.
-
-
-## Getting Started
-
-Follow these steps to get a local copy up and running.
+- User authentication
+- List spaces
+- Request bookings
+- View booking requests
+- PostgreSQL database
+- Pytest test suite
 
 ## Tech Stack
 
-*   **Frontend:** [HTML, CSS, Python]
-*   **Backend:** [Python/Flask] 
-*   **Database Adapter:** [psycopg]
-*   **Templating Engine:** [Jinja2 (HTML/CSS)]
-*   **Database:** [PostgreSQL]
-*   **Testing Suite:** [PyTest]
+- Python
+- Flask
+- PostgreSQL
+- Pytest
+- Playwright
 
-### Installation
+
+## Installation
 Step-by-step instructions on how to set up the development environment.
 1. Clone the repository:
    \`\`\`bash
