@@ -7,9 +7,6 @@ from lib.space import Space
 from datetime import date
 
 
-"""
-Testing that we are shown a single space with a booking form
-"""
 def test_get_single_space(db_connection, web_client):
     db_connection.seed("seeds/database_connection_test.sql")
     response = web_client.get('/spaces/1')
@@ -33,9 +30,6 @@ def test_get_spaces(db_connection, web_client):
     assert b'<form' in response.data
 
 
-"""
-Testing that list my space button creates a new space
-"""
 def test_post_spaces_creates_new_space(db_connection, web_client):
     db_connection.seed("seeds/database_connection_test.sql")
     with web_client.session_transaction() as sess:
@@ -47,9 +41,6 @@ def test_post_spaces_creates_new_space(db_connection, web_client):
     assert len(spaces) == 2
 
 
-"""
-Testing that a list of spaces shows in spaces route
-"""
 def test_get_spaces_shows_all_spaces(db_connection, web_client):
     db_connection.seed("seeds/database_connection_test.sql")
     response = web_client.get('/spaces')
@@ -57,27 +48,22 @@ def test_get_spaces_shows_all_spaces(db_connection, web_client):
     assert b'Test Space' in response.data
 
 
-"""
-Testing that we are shown bookings made and received at /requests
-"""
 def test_get_request_shows_booking_made_and_received(db_connection, web_client):
     db_connection.seed("seeds/database_connection_test.sql")
+    with web_client.session_transaction() as sess:
+        sess['user_email'] = 'test@test.com'
+        sess['user_id'] = 1
+        
     response = web_client.get('/requests')
     assert response.status_code == 200
 
 
-"""
-Testing that we we can get signup form at /signup
-"""
 def test_get_signup_form_returns_200():
     client = app.test_client()
     response = client.get("/signup")
     assert response.status_code == 200
 
 
-"""
-Testing that new users are added to the database
-"""
 def test_create_user_inserts_into_database():
     from lib.database_connection import DatabaseConnection
     connection = DatabaseConnection(test_mode=True)

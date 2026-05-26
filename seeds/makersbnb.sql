@@ -27,7 +27,7 @@ CREATE TABLE bookings (
     booking_status TEXT NOT NULL DEFAULT 'pending'
 );
 
--- Users
+
 INSERT INTO users (email, password_hash) VALUES
     ('emma.thornton@gmail.com', '$2b$12$LQv3c1yqBweJTgPoXc5vQORtLx7XjG1mYv3wKfR8TqZdN7mVk9Hxy'),
     ('james.nakamura@outlook.com', '$2b$12$9XwZkVpFgj2mN5qWxTcYvuBbN8hLkJpQrS1tY3uV7wX0zA1B2cD3e'),
@@ -35,7 +35,7 @@ INSERT INTO users (email, password_hash) VALUES
     ('marcus.oyelaran@proton.me', '$2b$12$4fG5hI6jK7lM8nO9pQ0rS1tU2vW3xY4zA5bC6dE7fG8hI9jK0lM1n'),
     ('lily.chen@icloud.com', '$2b$12$R2sT3uV4wX5yZ6aB7cD8eF9gH0iJ1kL2mN3oP4qR5sT6uV7wX8yZ9');
 
--- Spaces
+
 INSERT INTO spaces (user_id, space_name, space_location, space_description, price_per_night, available_from, available_to) VALUES
     (1, 'Cosy Camden Loft', 'Camden, London', 'Bright open-plan loft with exposed brick walls, skylights, and a private rooftop terrace overlooking the canal.', 145, '2026-05-20', '2026-08-31'),
     (1, 'Seaside Cottage Retreat', 'Whitstable, Kent', 'Charming 2-bedroom fisherman''s cottage steps from the beach. Wood-burning stove and fully equipped kitchen.', 120, '2026-06-01', '2026-09-15'),
@@ -44,7 +44,7 @@ INSERT INTO spaces (user_id, space_name, space_location, space_description, pric
     (4, 'Georgian Townhouse Room', 'Bath, Somerset', 'Elegant private room in a Grade II listed townhouse. Original period features with modern comforts.', 95, '2026-05-19', '2026-07-31'),
     (5, 'Artist''s Narrowboat', 'Little Venice, London', 'Unique stay aboard a beautifully converted 60ft narrowboat. Cosy interiors and peaceful waterside living.', 110, '2026-06-10', '2026-09-30');
 
--- Bookings
+
 INSERT INTO bookings (space_id, user_id, booking_date, booking_status) VALUES
     (1, 3, '2026-05-22', 'approved'),
     (1, 3, '2026-05-23', 'approved'),

@@ -1,14 +1,7 @@
--- The job of this file is to reset all of our important database tables.
--- And add any data that is needed for the tests to run.
--- This is so that our tests, and application, are always operating from a fresh
--- database state, and that tests don't interfere with each other.
-
--- First, we must delete (drop) all our tables
 DROP TABLE IF EXISTS users CASCADE;
 DROP TABLE IF EXISTS spaces CASCADE;
 DROP TABLE IF EXISTS bookings CASCADE;
 
--- Then, we recreate them
 CREATE TABLE users (
     id SERIAL PRIMARY KEY,
     email TEXT UNIQUE NOT NULL,
@@ -30,7 +23,8 @@ CREATE TABLE bookings(
     id SERIAL PRIMARY KEY,
     space_id INTEGER REFERENCES spaces(id),
     user_id INTEGER REFERENCES users(id),
-    booking_date DATE NOT NULL,
+    booking_start DATE NOT NULL,
+    booking_end DATE NOT NULL,
     booking_status TEXT NOT NULL DEFAULT 'pending'
 
 );
@@ -68,12 +62,14 @@ INSERT INTO bookings
 (
     space_id,
     user_id,
-    booking_date,
+    booking_start,
+    booking_end,
     booking_status
 )
 VALUES(
     1,
     1,
     '2026-05-20',
+    '2026-05-22',
     'approved'
 );

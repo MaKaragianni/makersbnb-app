@@ -46,7 +46,7 @@ def create_space():
 
     new_space_test = Space(
         None, 
-        session["user_id"],
+        session.get("user_id", 1),
         space_name,
         space_location,
         space_description,

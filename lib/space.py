@@ -1,5 +1,3 @@
-#represent one space
-
 class Space:
     def __init__(self, id, user_id, space_name, space_location, space_description, price_per_night, available_from,  available_to):
         self.id = id
